@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just for You ✨</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 1s ease forwards;
+    }
+    .card.active { display: block; }
+    h1, h2 { margin-bottom: 15px; font-weight: 500; }
+    p { line-height: 1.7; font-size: 15px; }
+    button {
+      margin-top: 22px;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 25px;
+      background: #ff6a88;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #ff4f70; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .heart {
+      position: absolute;
+      font-size: 16px;
+      animation: float 7s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-10vh); }
+    }
+  </style>
+</head>
+<body>  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_3b5c4c9a66.mp3?filename=moonlight-piano-ambient-121218.mp3" type="audio/mpeg">
+  </audio>  <div class="card active" id="step1">
+    <h1>Hello 🌙</h1>
+    <p>This little space was made quietly… just for you.</p>
+    <button onclick="nextStep(1)">Continue</button>
+  </div>  <div class="card" id="step2">
+    <h2>It’s 1st January 2026 🎆</h2>
+    <p>A new year has begun. I know you’re busy, working hard, chasing big dreams.</p>
+    <button onclick="nextStep(2)">Next</button>
+  </div>  <div class="card" id="step3">
+    <h2>Something Simple 🤍</h2>
+    <p>Being your friend has meant more to me than you may realize.</p>
+    <button onclick="nextStep(3)">Next</button>
+  </div>  <div class="card" id="step4">
+    <h2>About Your Dream 🩺</h2>
+    <p>You want to be a doctor. The world truly needs people like you — patient, determined, and kind. I believe in you.</p>
+    <button onclick="nextStep(4)">Next</button>
+  </div>  <div class="card" id="step5">
+    <h2>A Quiet Wish 🌱</h2>
+    <p>May this year give you strength for your studies, calm during hard days, and moments of rest when you need them.</p>
+    <button onclick="nextStep(5)">Next</button>
+  </div>  <div class="card" id="step6">
+    <h1>Happy New Year ✨</h1>
+    <p>No pressure. No expectations.<br/>Just a sincere wish from someone who genuinely cares.</p>
+  </div>  <script>
+    function nextStep(step) {
+      const music = document.getElementById('bgMusic');
+      if (music.paused) {
+        music.volume = 0.0;
+        let v = 0;
+        const fade = setInterval(() => {
+          if (v < 0.35) {
+            v += 0.01;
+            music.volume = v;
+          } else {
+            clearInterval(fade);
+          }
+        }, 150);
+        music.play().catch(() => {});
+      }
+      document.getElementById('step' + step).classList.remove('active');
+      document.getElementById('step' + (step + 1)).classList.add('active');
+    }
+
+    const emojis = ['✨','🤍','🌱','💫'];
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (5 + Math.random() * 4) + 's';
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }, 700);
+  </script></body>
+</html>
